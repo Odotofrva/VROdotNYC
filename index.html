@@ -1108,6 +1108,9 @@
     function enterVr() {
       vrOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+      
+      const prop = document.getElementById("propEntity");
+      prop.removeAttribute("animation");
     }
 
     function exitVr() {
