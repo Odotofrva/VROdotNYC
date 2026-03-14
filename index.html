@@ -38,6 +38,7 @@
     }
 
     * { box-sizing: border-box; }
+
     html, body {
       margin: 0;
       min-height: 100%;
@@ -139,17 +140,6 @@
       opacity: 0.5;
     }
 
-    .brand-mark {
-      font-size: clamp(28px, 7vw, 46px);
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      position: relative;
-      text-shadow: 0 0 14px rgba(255,255,255,0.22);
-      animation: glitch 3.2s infinite;
-      padding-left: 0.18em;
-    }
-
     .load-block {
       width: 100%;
       display: grid;
@@ -209,6 +199,36 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .main-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.25));
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      padding: 5px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .title-stack {
+      min-width: 0;
     }
 
     .title-stack h1 {
@@ -255,6 +275,7 @@
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      flex-shrink: 0;
     }
 
     .hub-content {
@@ -319,16 +340,17 @@
     }
 
     .viewer-card {
-        background: #cfcfcf;
-        }
+      position: relative;
+      background: #cfcfcf;
+    }
 
     model-viewer {
-        width: 100%;
-        height: 100%;
-        min-height: 44dvh;
-        --poster-color: transparent;
-        background: #d9d9d9;
-        }
+      width: 100%;
+      height: 100%;
+      min-height: 44dvh;
+      --poster-color: transparent;
+      background: #d9d9d9;
+    }
 
     .viewer-hud {
       position: absolute;
@@ -434,13 +456,42 @@
       z-index: 50;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       gap: 10px;
       pointer-events: none;
     }
 
     .vr-ui > * {
       pointer-events: auto;
+    }
+
+    .vr-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .vr-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .vr-top-logo {
+      width: 78%;
+      height: 78%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.28));
     }
 
     .vr-pill {
@@ -455,6 +506,7 @@
       font-family: "IBM Plex Mono", monospace;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      white-space: nowrap;
     }
 
     .vr-scene-wrap {
@@ -670,6 +722,31 @@
       cursor: pointer;
     }
 
+    @media (max-width: 520px) {
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .topbar-left {
+        gap: 10px;
+      }
+
+      .main-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .vr-pill {
+        font-size: 10px;
+        padding: 9px 12px;
+      }
+
+      .vr-logo-wrap {
+        width: 42px;
+        height: 42px;
+      }
+    }
+
     /* Desktop refinements */
     @media (min-width: 760px) {
       .hub {
@@ -728,14 +805,6 @@
       0% { transform: translateX(-140%); }
       100% { transform: translateX(140%); }
     }
-
-    @keyframes glitch {
-      0%, 88%, 100% { transform: translate(0, 0); opacity: 1; }
-      90% { transform: translate(-1px, 0); opacity: 0.96; }
-      92% { transform: translate(2px, 1px); opacity: 0.88; }
-      94% { transform: translate(-1px, -1px); opacity: 1; }
-      96% { transform: translate(1px, 0); opacity: 0.94; }
-    }
   </style>
 </head>
 <body>
@@ -763,9 +832,12 @@
     <!-- Main hub -->
     <main class="screen hub" id="hubScreen" aria-label="Main application screen">
       <header class="topbar">
-        <div class="title-stack">
-          <h1>VR OdotNYC</h1>
-          <p>The Official VR OdotNYC</p>
+        <div class="topbar-left">
+          <img src="odotnyc3final.png" alt="OdotNYC logo" class="main-logo" />
+          <div class="title-stack">
+            <h1>VR OdotNYC</h1>
+            <p>The Official VR OdotNYC</p>
+          </div>
         </div>
         <button class="icon-btn" id="openHelpBtn" type="button">Help</button>
       </header>
@@ -833,33 +905,34 @@
     <!-- VR overlay -->
     <section class="vr-overlay" id="vrOverlay" aria-label="VR mode">
       <div class="vr-ui">
-        <div class="vr-pill" id="vrWorldName">Neon Rooftop</div>
+        <div class="vr-left">
+          <div class="vr-logo-wrap">
+            <img src="odotnyc3final.png" alt="OdotNYC logo" class="vr-top-logo" />
+          </div>
+          <div class="vr-pill" id="vrWorldName">Neon Rooftop</div>
+        </div>
         <button class="vr-pill" id="exitVrBtn" type="button">Exit VR</button>
       </div>
 
       <div class="vr-scene-wrap">
         <a-scene embedded xr-mode-ui="enabled: true" renderer="colorManagement: true; physicallyCorrectLights: true" vr-mode-ui="enabled: true">
           <a-assets>
-            <!-- Replace these with your real low-poly worlds and props -->
             <a-asset-item id="worldModel" src="planet_earth.glb"></a-asset-item>
             <a-asset-item id="propModel" src="planet_earth.glb"></a-asset-item>
+            <img id="vrLogoTexture" src="odotnyc3final.png" alt="OdotNYC Logo">
           </a-assets>
 
           <a-sky color="#060606"></a-sky>
           <a-entity light="type: ambient; intensity: 1.1; color: #ffffff"></a-entity>
           <a-entity light="type: directional; intensity: 0.8; color: #ffffff" position="1 3 2"></a-entity>
 
-          <!-- Ground ring -->
           <a-cylinder position="0 0 -4" radius="8" height="0.05" color="#111111"></a-cylinder>
           <a-ring position="0 0.06 -4" rotation="-90 0 0" radius-inner="4.5" radius-outer="5.1" color="#777777"></a-ring>
 
-          <!-- Main selected world model -->
           <a-entity id="worldEntity" gltf-model="#worldModel" position="0 0 -5" scale="1 1 1"></a-entity>
 
-          <!-- Spinnable focus prop -->
           <a-entity id="propEntity" gltf-model="#propModel" position="0 1.4 -2.4" rotation="0 40 0" scale="0.9 0.9 0.9" animation="property: rotation; to: 0 400 0; loop: true; dur: 24000; easing: linear"></a-entity>
 
-          <!-- Teleport hotspots -->
           <a-entity id="hotspotLeft" geometry="primitive: circle; radius: 0.38" material="color: #ffffff; opacity: 0.75" position="-1.4 1.2 -3.3" class="clickable"></a-entity>
           <a-text value="Prev" position="-1.62 0.7 -3.3" color="#ffffff" width="3"></a-text>
 
@@ -867,9 +940,15 @@
           <a-text value="Next" position="1.18 0.7 -3.3" color="#ffffff" width="3"></a-text>
 
           <!-- Center branding in VR -->
-          <a-image id="vrBrandLogo" src="odotnyc3final.png" position="0 1.15 -3.25" width="1.35" height="0.78" material="shader: flat; transparent: true; opacity: 0.95"></a-image>
+          <a-image
+            id="vrBrandLogo"
+            src="#vrLogoTexture"
+            position="0 1.15 -3.25"
+            width="1.35"
+            height="0.78"
+            material="shader: flat; transparent: true; opacity: 0.95"
+          ></a-image>
 
-          <!-- Camera rig -->
           <a-entity id="rig" position="0 1.6 0">
             <a-camera wasd-controls-enabled="false" look-controls="touchEnabled: true; magicWindowTrackingEnabled: true">
               <a-cursor
@@ -1061,7 +1140,6 @@
       propAsset.setAttribute('src', world.previewModel);
       sky.setAttribute('color', world.sky);
 
-      // Re-apply gltf-model so A-Frame refreshes the entities on source change.
       worldEntity.setAttribute('gltf-model', `url(${world.worldModel})`);
       propEntity.setAttribute('gltf-model', `url(${world.previewModel})`);
 
@@ -1108,7 +1186,7 @@
     function enterVr() {
       vrOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
-      
+
       const prop = document.getElementById("propEntity");
       prop.removeAttribute("animation");
     }
