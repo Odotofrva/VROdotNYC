@@ -186,8 +186,9 @@
       min-height: 100dvh;
       display: grid;
       grid-template-rows: auto 1fr auto;
-      padding: calc(16px + var(--safe-top)) 16px calc(18px + var(--safe-bottom));
+      padding: calc(14px + var(--safe-top)) 14px calc(18px + var(--safe-bottom));
       gap: 14px;
+      overflow-y: auto;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.03), transparent 24%),
         radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08), transparent 30%),
@@ -195,9 +196,9 @@
     }
 
     .topbar {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
       gap: 12px;
       padding: 12px 14px;
       border: 1px solid var(--line);
@@ -206,13 +207,19 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       box-shadow: var(--shadow);
+      position: sticky;
+      top: calc(10px + var(--safe-top));
+      z-index: 5;
     }
 
     .topbar-left {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 12px;
       min-width: 0;
+      grid-column: 2;
+      text-align: center;
     }
 
     .main-logo {
@@ -231,6 +238,11 @@
       min-width: 0;
     }
 
+    .topbar-spacer {
+      width: 44px;
+      min-height: 44px;
+    }
+
     .title-stack h1 {
       margin: 0;
       font-size: clamp(20px, 5vw, 28px);
@@ -243,6 +255,13 @@
       margin: 6px 0 0;
       color: var(--muted);
       font-size: 13px;
+    }
+
+    .title-stack .main-logo {
+      display: block;
+      margin: 0 auto 10px;
+      width: 62px;
+      height: 62px;
     }
 
     .icon-btn,
@@ -282,23 +301,31 @@
       display: grid;
       gap: 14px;
       min-height: 0;
-      grid-template-rows: auto auto 1fr;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "hero"
+        "viewer"
+        "controls";
+      align-content: start;
     }
 
     .world-card,
     .control-card,
     .viewer-card {
-      background: transparent;
+      background: rgba(255,255,255,0.03);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
       overflow: hidden;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .world-card {
+      grid-area: hero;
       padding: 18px;
       display: grid;
-      gap: 10px;
+      gap: 12px;
     }
 
     .eyebrow {
@@ -340,16 +367,18 @@
     }
 
     .viewer-card {
+      grid-area: viewer;
       position: relative;
-      background: #cfcfcf;
+      background: linear-gradient(180deg, #d6d6d6, #bcbcbc);
+      min-height: 48dvh;
     }
 
     model-viewer {
       width: 100%;
       height: 100%;
-      min-height: 44dvh;
+      min-height: 48dvh;
       --poster-color: transparent;
-      background: #d9d9d9;
+      background: transparent;
     }
 
     .viewer-hud {
@@ -384,14 +413,42 @@
     }
 
     .control-card {
+      grid-area: controls;
       padding: 14px;
       display: grid;
-      gap: 10px;
+      gap: 12px;
     }
 
     .button-grid {
       display: grid;
       grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .action-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .robotechi-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      animation: attentionBounce 1.8s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .robotechi-link::after {
+      content: "↗";
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
@@ -414,6 +471,30 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
+    }
+
+    .mini-note {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .mini-note strong {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "IBM Plex Mono", monospace;
+      color: #fff;
+    }
+
+    .mini-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .helper {
@@ -724,7 +805,7 @@
 
     @media (max-width: 520px) {
       .topbar {
-        align-items: flex-start;
+        grid-template-columns: 36px 1fr auto;
       }
 
       .topbar-left {
@@ -734,6 +815,11 @@
       .main-logo {
         width: 46px;
         height: 46px;
+      }
+
+      .title-stack .main-logo {
+        width: 56px;
+        height: 56px;
       }
 
       .vr-pill {
@@ -756,29 +842,25 @@
       }
 
       .hub-content {
-        grid-template-columns: 1.1fr 1.1fr;
-        grid-template-rows: auto 1fr;
-        align-items: stretch;
-      }
-
-      .world-card {
-        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+        grid-template-areas:
+          "hero hero"
+          "viewer controls";
+        align-items: start;
       }
 
       .viewer-card {
-        min-height: 52dvh;
+        min-height: 60dvh;
       }
 
       model-viewer {
-        min-height: 52dvh;
+        min-height: 60dvh;
       }
 
       .control-card {
         align-content: start;
-      }
-
-      .button-grid {
-        grid-template-columns: 1fr;
+        position: sticky;
+        top: calc(96px + var(--safe-top));
       }
 
       .sheet {
@@ -804,6 +886,14 @@
     @keyframes scan {
       0% { transform: translateX(-140%); }
       100% { transform: translateX(140%); }
+    }
+
+    @keyframes attentionBounce {
+      0%, 100% { transform: translateY(0); }
+      12% { transform: translateY(-4px) scale(1.01); }
+      24% { transform: translateY(0); }
+      36% { transform: translateY(-8px) scale(1.02); }
+      48% { transform: translateY(0); }
     }
   </style>
 </head>
@@ -832,9 +922,10 @@
     <!-- Main hub -->
     <main class="screen hub" id="hubScreen" aria-label="Main application screen">
       <header class="topbar">
+        <div class="topbar-spacer" aria-hidden="true"></div>
         <div class="topbar-left">
-          <img src="odotnyc3final.png" alt="OdotNYC logo" class="main-logo" />
           <div class="title-stack">
+            <img src="odotnyc3final.png" alt="OdotNYC logo" class="main-logo" />
             <h1>VR OdotNYC</h1>
             <p>The Official VR OdotNYC</p>
           </div>
@@ -852,6 +943,10 @@
           <p class="world-desc" id="worldDescription">
             A dark rooftop world with soft skyline glow, floating structures, and clean monochrome geometry.
           </p>
+          <div class="mini-note">
+            <strong>Mobile Flow</strong>
+            <p>Scroll naturally through the stack: preview the world, pick a different scene, then jump into VR when you are ready.</p>
+          </div>
         </article>
 
         <article class="viewer-card">
@@ -886,12 +981,22 @@
         <article class="control-card">
           <div class="eyebrow">Controls</div>
           <div class="button-grid">
-            <button class="primary-btn" id="enterVrBtn" type="button">Enter VR</button>
-            <div class="controls-inline">
-              <button class="secondary-btn" id="openWorldsBtn" type="button">Choose World</button>
-              <button class="secondary-btn" id="cardboardBtn" type="button">Cardboard Guide</button>
+            <div class="action-stack">
+              <button class="primary-btn" id="enterVrBtn" type="button">Enter VR</button>
+              <a class="primary-btn robotechi-link" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer">Visit RoboTechi</a>
+              <div class="quick-actions">
+                <button class="secondary-btn" id="openWorldsBtn" type="button">Choose World</button>
+                <button class="secondary-btn" id="cardboardBtn" type="button">Cardboard Guide</button>
+              </div>
+              <div class="controls-inline">
+                <button class="ghost-btn" id="toggleRotateBtn" type="button">Pause Auto Spin</button>
+                <button class="ghost-btn" id="openHelpBtnSecondary" type="button">Instructions</button>
+              </div>
             </div>
-            <button class="ghost-btn" id="toggleRotateBtn" type="button">Pause Auto Spin</button>
+          </div>
+          <div class="mini-note">
+            <strong>How it feels</strong>
+            <p>Drag the model to inspect the scene, zoom in to check scale, then enter VR for the immersive version. World changes stay one tap away in the stack.</p>
           </div>
           <p class="helper">
             Preview the realm on the main screen by dragging to spin and pinching to zoom. Enter VR when you're ready to explore the selected world in an immersive OdotNYC Cardboard-style view.
@@ -1086,6 +1191,7 @@
 
     const openHelpBtn = document.getElementById('openHelpBtn');
     const cardboardBtn = document.getElementById('cardboardBtn');
+    const openHelpBtnSecondary = document.getElementById('openHelpBtnSecondary');
     const openWorldsBtn = document.getElementById('openWorldsBtn');
     const enterVrBtn = document.getElementById('enterVrBtn');
     const exitVrBtn = document.getElementById('exitVrBtn');
@@ -1193,7 +1299,7 @@
 
     function exitVr() {
       vrOverlay.classList.remove('active');
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = '';
     }
 
     function resetCamera() {
@@ -1227,6 +1333,7 @@
 
     openHelpBtn.addEventListener('click', openHelp);
     cardboardBtn.addEventListener('click', openHelp);
+    openHelpBtnSecondary.addEventListener('click', openHelp);
     openWorldsBtn.addEventListener('click', openWorlds);
     enterVrBtn.addEventListener('click', enterVr);
     exitVrBtn.addEventListener('click', exitVr);
