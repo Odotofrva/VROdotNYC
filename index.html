@@ -9,7 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- model-viewer -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
@@ -19,17 +19,20 @@
 
   <style>
     :root {
-      --bg: #050505;
-      --bg-2: #0d0d0d;
-      --panel: rgba(255,255,255,0.06);
-      --panel-2: rgba(255,255,255,0.1);
-      --line: rgba(255,255,255,0.12);
-      --line-2: rgba(255,255,255,0.2);
-      --text: #f5f5f5;
-      --muted: #b0b0b0;
-      --soft: #888;
-      --accent: #fff;
-      --shadow: 0 12px 40px rgba(0,0,0,0.35);
+      --bg: #05030d;
+      --bg-2: #0e0a19;
+      --panel: rgba(125, 74, 255, 0.12);
+      --panel-2: rgba(0, 235, 255, 0.12);
+      --line: rgba(135, 102, 255, 0.28);
+      --line-2: rgba(0, 235, 255, 0.34);
+      --text: #f7f3ff;
+      --muted: #c1b6e0;
+      --soft: #8d84aa;
+      --accent: #8b5cf6;
+      --accent-2: #00e7ff;
+      --accent-3: #ff4fd8;
+      --shadow: 0 18px 60px rgba(0,0,0,0.48);
+      --glow: 0 0 24px rgba(139, 92, 246, 0.35), 0 0 48px rgba(0, 231, 255, 0.12);
       --radius-xl: 26px;
       --radius-lg: 20px;
       --radius-md: 14px;
@@ -42,7 +45,11 @@
     html, body {
       margin: 0;
       min-height: 100%;
-      background: radial-gradient(circle at top, #111 0%, var(--bg) 45%, #000 100%);
+      background:
+        radial-gradient(circle at top, rgba(139,92,246,0.2) 0%, transparent 22%),
+        radial-gradient(circle at 80% 10%, rgba(0,231,255,0.14) 0%, transparent 18%),
+        radial-gradient(circle at 20% 100%, rgba(255,79,216,0.12) 0%, transparent 24%),
+        linear-gradient(180deg, #12071f 0%, var(--bg) 48%, #020204 100%);
       color: var(--text);
       font-family: "Space Grotesk", system-ui, sans-serif;
       overflow: hidden;
@@ -53,7 +60,7 @@
       position: fixed;
       inset: 0;
       background:
-        linear-gradient(rgba(255,255,255,0.015), rgba(255,255,255,0.015)),
+        linear-gradient(rgba(115,92,255,0.035), rgba(0,231,255,0.02)),
         repeating-linear-gradient(
           to bottom,
           rgba(255,255,255,0.03) 0,
@@ -244,6 +251,8 @@
     }
 
     .title-stack h1 {
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
+      text-shadow: 0 0 18px rgba(139,92,246,0.45), 0 0 28px rgba(0,231,255,0.18);
       margin: 0;
       font-size: clamp(20px, 5vw, 28px);
       line-height: 1;
@@ -263,6 +272,8 @@
       width: 62px;
       height: 62px;
     }
+
+    a { color: inherit; }
 
     .icon-btn,
     .ghost-btn,
@@ -289,6 +300,8 @@
     }
 
     .icon-btn {
+      border-color: rgba(0,231,255,0.35);
+      box-shadow: 0 0 20px rgba(0,231,255,0.12);
       padding: 12px 14px;
       font-family: "IBM Plex Mono", monospace;
       font-size: 12px;
@@ -312,10 +325,10 @@
     .world-card,
     .control-card,
     .viewer-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(22,15,44,0.82), rgba(8,8,20,0.88));
+      border: 1px solid rgba(135,102,255,0.28);
       border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow), var(--glow);
       overflow: hidden;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -344,6 +357,8 @@
     }
 
     .world-title-row h2 {
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
+      text-shadow: 0 0 16px rgba(139,92,246,0.38);
       margin: 0;
       font-size: clamp(22px, 6vw, 32px);
       line-height: 1;
@@ -369,7 +384,10 @@
     .viewer-card {
       grid-area: viewer;
       position: relative;
-      background: linear-gradient(180deg, #d6d6d6, #bcbcbc);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(0,231,255,0.26), transparent 18%),
+        radial-gradient(circle at 20% 80%, rgba(255,79,216,0.18), transparent 22%),
+        linear-gradient(180deg, rgba(23,18,46,0.95), rgba(10,8,18,0.98));
       min-height: 48dvh;
     }
 
@@ -400,6 +418,8 @@
     }
 
     .hud-chip {
+      border: 1px solid rgba(0,231,255,0.28);
+      box-shadow: 0 0 16px rgba(0,231,255,0.12);
       pointer-events: auto;
       border: 1px solid var(--line-2);
       background: rgba(0,0,0,0.45);
@@ -431,6 +451,7 @@
     }
 
     .robotechi-link {
+      box-shadow: 0 0 26px rgba(255,79,216,0.14);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -453,6 +474,9 @@
     }
 
     .primary-btn {
+      background: linear-gradient(135deg, rgba(139,92,246,0.95), rgba(0,231,255,0.62));
+      border-color: rgba(0,231,255,0.5);
+      box-shadow: 0 0 24px rgba(139,92,246,0.28), 0 0 34px rgba(0,231,255,0.12);
       background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
       border-color: rgba(255,255,255,0.24);
       color: #fff;
@@ -464,6 +488,8 @@
 
     .secondary-btn,
     .ghost-btn {
+      background: linear-gradient(180deg, rgba(24,16,46,0.92), rgba(10,10,24,0.82));
+      border-color: rgba(135,102,255,0.28);
       color: #e6e6e6;
     }
 
@@ -505,6 +531,7 @@
     }
 
     .footer-note {
+      color: #b9a9e6;
       text-align: center;
       color: #8a8a8a;
       font-family: "IBM Plex Mono", monospace;
@@ -515,6 +542,7 @@
 
     /* VR overlay */
     .vr-overlay {
+      background: radial-gradient(circle at top, rgba(139,92,246,0.12), transparent 30%), #020205;
       position: absolute;
       inset: 0;
       z-index: 40;
@@ -576,6 +604,8 @@
     }
 
     .vr-pill {
+      border: 1px solid rgba(0,231,255,0.28);
+      box-shadow: 0 0 18px rgba(139,92,246,0.2);
       background: rgba(0,0,0,0.55);
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 999px;
@@ -620,6 +650,9 @@
 
     .modal,
     .sheet {
+      background: linear-gradient(180deg, rgba(18,12,34,0.96), rgba(5,5,14,0.96));
+      border: 1px solid rgba(135,102,255,0.28);
+      box-shadow: var(--shadow), var(--glow);
       position: absolute;
       z-index: 70;
       opacity: 0;
@@ -687,6 +720,7 @@
 
     .modal-title,
     .sheet-title {
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
       margin: 0;
       font-size: 22px;
     }
@@ -705,6 +739,8 @@
     }
 
     .step {
+      background: linear-gradient(180deg, rgba(26,19,49,0.9), rgba(10,10,22,0.85));
+      border: 1px solid rgba(0,231,255,0.18);
       display: grid;
       grid-template-columns: 32px 1fr;
       gap: 12px;
@@ -716,6 +752,7 @@
     }
 
     .step-num {
+      box-shadow: 0 0 16px rgba(139,92,246,0.22);
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -739,6 +776,8 @@
     }
 
     .world-option {
+      background: linear-gradient(180deg, rgba(30,20,60,0.92), rgba(11,10,25,0.86));
+      border: 1px solid rgba(135,102,255,0.28);
       width: 100%;
       text-align: left;
       display: grid;
@@ -787,6 +826,7 @@
     }
 
     .meta-pill {
+      border: 1px solid rgba(0,231,255,0.22);
       padding: 6px 8px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.14);
@@ -794,6 +834,7 @@
     }
 
     .close-btn {
+      border: 1px solid rgba(135,102,255,0.28);
       min-width: 44px;
       min-height: 44px;
       border-radius: 14px;
@@ -823,6 +864,8 @@
       }
 
       .vr-pill {
+      border: 1px solid rgba(0,231,255,0.28);
+      box-shadow: 0 0 18px rgba(139,92,246,0.2);
         font-size: 10px;
         padding: 9px 12px;
       }
@@ -895,10 +938,272 @@
       36% { transform: translateY(-8px) scale(1.02); }
       48% { transform: translateY(0); }
     }
+  
+
+    /* Game launcher redesign */
+    .hub.game-hub {
+      background:
+        radial-gradient(circle at top, rgba(139,92,246,0.2), transparent 22%),
+        radial-gradient(circle at 100% 0%, rgba(0,231,255,0.14), transparent 18%),
+        linear-gradient(180deg, #090412 0%, #04030a 100%);
+    }
+
+    .game-hub .topbar {
+      border: 1px solid rgba(135,102,255,0.28);
+      box-shadow: var(--shadow), var(--glow);
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      padding: 16px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    }
+
+    .game-hub .topbar-left {
+      grid-column: 1;
+      justify-content: start;
+      text-align: left;
+    }
+
+    .game-launcher {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .launcher-hero,
+    .viewer-card.launcher-viewer,
+    .launcher-actions,
+    .mission-card,
+    .world-strip-card {
+      background: linear-gradient(180deg, rgba(22,15,44,0.88), rgba(7,7,18,0.9));
+      border: 1px solid rgba(135,102,255,0.28);
+      border-radius: 26px;
+      box-shadow: var(--shadow), var(--glow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
+
+    .launcher-hero {
+      position: relative;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .launcher-hero::before {
+      opacity: 1;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 24%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero-badges,
+    .hero-stats,
+    .world-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-chip,
+    .stat-chip,
+    .world-pill {
+      border: 1px solid rgba(0,231,255,0.28);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "IBM Plex Mono", monospace;
+      background: linear-gradient(180deg, rgba(42,20,84,0.72), rgba(9,18,38,0.58));
+      box-shadow: 0 0 16px rgba(139,92,246,0.14);
+      color: #f4f4f4;
+    }
+
+    .hero-main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-main h2 {
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
+      text-shadow: 0 0 24px rgba(139,92,246,0.5), 0 0 40px rgba(0,231,255,0.14);
+      margin: 0;
+      font-size: clamp(28px, 8vw, 42px);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-main p {
+      margin: 0;
+      color: #cfcfcf;
+      line-height: 1.55;
+      font-size: 14px;
+      max-width: 48ch;
+    }
+
+    .hero-cta-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .launcher-viewer {
+      box-shadow: var(--shadow), 0 0 32px rgba(0,231,255,0.14), 0 0 48px rgba(139,92,246,0.16);
+      min-height: 43dvh;
+      background:
+        radial-gradient(circle at 50% 16%, rgba(0,231,255,0.24), transparent 18%),
+        radial-gradient(circle at 20% 80%, rgba(255,79,216,0.16), transparent 22%),
+        linear-gradient(180deg, rgba(16,13,34,0.98), rgba(7,6,18,0.98));
+    }
+
+    .launcher-viewer model-viewer {
+      min-height: 43dvh;
+    }
+
+    .launcher-actions {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .mission-card,
+    .world-strip-card {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mission-card p,
+    .world-strip-card p {
+      margin: 0;
+      color: #d2c7ef;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .world-strip-card {
+      padding-bottom: 18px;
+    }
+
+    .world-strip {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .world-strip::-webkit-scrollbar { display: none; }
+
+    .world-pill {
+      min-width: max-content;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .world-pill.active {
+      border-color: rgba(255,255,255,0.34);
+      background: rgba(255,255,255,0.14);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
+    }
+
+    .world-pill:active { transform: scale(0.98); }
+
+    .topbar-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .brand-kicker {
+      color: #7ee7ff;
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .robotechi-link.game-link {
+      background: linear-gradient(135deg, rgba(255,79,216,0.9), rgba(139,92,246,0.82), rgba(0,231,255,0.68));
+      border-color: rgba(255,79,216,0.42);
+      box-shadow: 0 0 28px rgba(255,79,216,0.2), 0 0 36px rgba(0,231,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.1));
+    }
+
+    .game-hub .helper {
+      font-size: 13px;
+    }
+
+    @media (min-width: 760px) {
+      .game-launcher {
+        grid-template-columns: 1.15fr 1fr;
+        grid-template-areas:
+          "hero hero"
+          "viewer actions"
+          "viewer mission"
+          "strip strip";
+      }
+      .launcher-hero { grid-area: hero; }
+      .launcher-viewer {
+      box-shadow: var(--shadow), 0 0 32px rgba(0,231,255,0.14), 0 0 48px rgba(139,92,246,0.16); grid-area: viewer; min-height: 58dvh; }
+      .launcher-viewer model-viewer { min-height: 58dvh; }
+      .launcher-actions { grid-area: actions; }
+      .mission-card { grid-area: mission; }
+      .world-strip-card { grid-area: strip; }
+      .hero-cta-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    .neon-orb {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      filter: blur(18px);
+      opacity: 0.45;
+      pointer-events: none;
+      animation: floatOrb 6s ease-in-out infinite;
+    }
+
+    .neon-orb.orb-a { top: 90px; right: -40px; background: radial-gradient(circle, rgba(0,231,255,0.7), transparent 60%); }
+    .neon-orb.orb-b { bottom: 120px; left: -50px; background: radial-gradient(circle, rgba(255,79,216,0.55), transparent 60%); animation-delay: -2s; }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-16px) scale(1.06); }
+    }
+
+    @keyframes launcherPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+      50% { box-shadow: 0 0 34px rgba(255,255,255,0.12); }
+    }
+
   </style>
 </head>
 <body>
   <div class="app-shell">
+    <div class="neon-orb orb-a" aria-hidden="true"></div>
+    <div class="neon-orb orb-b" aria-hidden="true"></div>
     <!-- Landing -->
     <section class="screen landing active" id="landingScreen" aria-label="Loading screen">
       <div class="landing-inner">
@@ -920,36 +1225,44 @@
     </section>
 
     <!-- Main hub -->
-    <main class="screen hub" id="hubScreen" aria-label="Main application screen">
+    <main class="screen hub game-hub" id="hubScreen" aria-label="Main application screen">
       <header class="topbar">
-        <div class="topbar-spacer" aria-hidden="true"></div>
         <div class="topbar-left">
           <div class="title-stack">
             <img src="odotnyc3final.png" alt="OdotNYC logo" class="main-logo" />
-            <h1>VR OdotNYC</h1>
-            <p>The Official VR OdotNYC</p>
+            <p class="brand-kicker">RoboTechi x OdotNYC VR Launcher</p>
+            <h1>Choose Your World</h1>
+            <p>A bold neon cyber-mystical portal with a RoboTechi mission-control feel.</p>
           </div>
         </div>
-        <button class="icon-btn" id="openHelpBtn" type="button">Help</button>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="openHelpBtn" type="button">Help</button>
+        </div>
       </header>
 
-      <section class="hub-content">
-        <article class="world-card" aria-live="polite">
-          <div class="eyebrow">Current World</div>
-          <div class="world-title-row">
-            <h2 id="worldTitle">MNC Headquaters</h2>
-            <div class="world-tag" id="worldStyleTag">Mono / Futuristic</div>
+      <section class="game-launcher" aria-live="polite">
+        <article class="launcher-hero">
+          <div class="hero-badges">
+            <span class="hero-chip" id="worldStyleTag">Mono / Futuristic</span>
+            <span class="hero-chip" id="worldAccent">Silver Skyline</span>
           </div>
-          <p class="world-desc" id="worldDescription">
-            A dark rooftop world with soft skyline glow, floating structures, and clean monochrome geometry.
-          </p>
-          <div class="mini-note">
-            <strong>Mobile Flow</strong>
-            <p>Scroll naturally through the stack: preview the world, pick a different scene, then jump into VR when you are ready.</p>
+          <div class="hero-main">
+            <div class="eyebrow">World Loaded</div>
+            <h2 id="worldTitle">MNC Headquaters</h2>
+            <p id="worldDescription">A dark rooftop world with soft skyline glow, floating structures, and clean monochrome geometry.</p>
+          </div>
+          <div class="hero-stats">
+            <span class="stat-chip" id="worldMissionLabel">Stage 01</span>
+            <span class="stat-chip" id="worldMetaLabel">Cardboard Ready</span>
+            <span class="stat-chip" id="modelFileLabel">MNC HQ</span>
+          </div>
+          <div class="hero-cta-row">
+            <button class="primary-btn" id="enterVrBtn" type="button">Launch VR Run</button>
+            <a class="primary-btn robotechi-link game-link" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer">Visit RoboTechi</a>
           </div>
         </article>
 
-        <article class="viewer-card">
+        <article class="viewer-card launcher-viewer">
           <model-viewer
             id="modelViewer"
             src="Beach_House.glb"
@@ -969,38 +1282,35 @@
           <div class="viewer-hud">
             <div class="hud-chip-row">
               <button class="hud-chip" id="resetCameraBtn" type="button">Reset View</button>
-              <div class="hud-chip">Spin + Zoom Enabled</div>
+              <div class="hud-chip">Neon Scan Active</div>
             </div>
             <div class="hud-bottom-row">
-              <div class="hud-chip" id="modelFileLabel">MNC HQ</div>
-              <div class="hud-chip">Touch to interact</div>
+              <div class="hud-chip" id="viewerWorldTag">World Preview</div>
+              <div class="hud-chip">Portal Preview</div>
             </div>
           </div>
         </article>
 
-        <article class="control-card">
-          <div class="eyebrow">Controls</div>
-          <div class="button-grid">
-            <div class="action-stack">
-              <button class="primary-btn" id="enterVrBtn" type="button">Enter VR</button>
-              <a class="primary-btn robotechi-link" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer">Visit RoboTechi</a>
-              <div class="quick-actions">
-                <button class="secondary-btn" id="openWorldsBtn" type="button">Choose World</button>
-                <button class="secondary-btn" id="cardboardBtn" type="button">Cardboard Guide</button>
-              </div>
-              <div class="controls-inline">
-                <button class="ghost-btn" id="toggleRotateBtn" type="button">Pause Auto Spin</button>
-                <button class="ghost-btn" id="openHelpBtnSecondary" type="button">Instructions</button>
-              </div>
-            </div>
+        <article class="launcher-actions">
+          <div class="eyebrow">Mission Controls</div>
+          <div class="launcher-grid">
+            <button class="secondary-btn" id="openWorldsBtn" type="button">World Library</button>
+            <button class="secondary-btn" id="cardboardBtn" type="button">Cardboard Guide</button>
+            <button class="ghost-btn" id="toggleRotateBtn" type="button">Pause Auto Spin</button>
+            <button class="ghost-btn" id="openHelpBtnSecondary" type="button">Instructions</button>
           </div>
-          <div class="mini-note">
-            <strong>How it feels</strong>
-            <p>Drag the model to inspect the scene, zoom in to check scale, then enter VR for the immersive version. World changes stay one tap away in the stack.</p>
-          </div>
-          <p class="helper">
-            Preview the realm on the main screen by dragging to spin and pinching to zoom. Enter VR when you're ready to explore the selected world in an immersive OdotNYC Cardboard-style view.
-          </p>
+          <p class="helper">Think of this like a small VR game launcher: scout the environment, choose your realm, then start a run in cardboard mode.</p>
+        </article>
+
+        <article class="mission-card">
+          <div class="eyebrow">RoboTechi Twist</div>
+          <p>Each world now feels like a glowing digital realm instead of a plain model viewer. The launcher leans into cyber-mystical energy with portal cards, bright chips, and a stronger arcade-VR presence.</p>
+        </article>
+
+        <article class="world-strip-card">
+          <div class="eyebrow">Quick World Jump</div>
+          <p>Tap a world below for fast switching, or open the full library for the bigger selector.</p>
+          <div class="world-strip" id="worldStrip"></div>
         </article>
       </section>
 
@@ -1126,44 +1436,56 @@
         id: "neon-rooftop",
         name: "MNC HeadQuaters",
         tag: "OdotNYC.xyz",
-        desc: "MENOCLONE",
+        desc: "A fashion-tech launch zone with bold geometry and a dark skyline glow.",
         previewModel: "Beach_House.glb",
         worldModel: "Beach_House.glb",
         sky: "#060606",
         accent: "Silver Skyline",
-        details: ["Low Poly", "Cardboard Ready", "Night World"]
+        stage: "Stage 01",
+        meta: "Cardboard Ready",
+        quick: "MNC HQ",
+        details: ["Low Poly", "Launch Bay", "Night World"]
       },
       {
         id: "digital-gallery",
-        name: "Entreprenur Room",
+        name: "Entrepreneur Room",
         tag: "Bedroom / Minimal",
-        desc: "The Bedroom OdotNYC started his amazing tech journey.",
+        desc: "A startup origin room where ideas, hardware, and code first come to life.",
         previewModel: "small_room_scene.glb",
         worldModel: "small_room_scene.glb",
         sky: "#060606",
-        accent: "Gallery Mode",
+        accent: "Origin Point",
+        stage: "Stage 02",
+        meta: "Story Zone",
+        quick: "Founder Room",
         details: ["Indoor", "Clean Lighting", "Showcase"]
       },
       {
         id: "monochrome-city",
         name: "Monochrome City",
         tag: "Urban / Sci-Fi",
-        desc: "A stylized low-poly city with bold geometry, floating signs, and a grayscale cyber-future mood.",
+        desc: "A grayscale cyber-city with game-like energy and a futuristic roaming mood.",
         previewModel: "alien_planet_lv-426.glb",
         worldModel: "alien_planet_lv-426.glb",
         sky: "#0a0a0a",
         accent: "Urban Grid",
+        stage: "Stage 03",
+        meta: "Open Route",
+        quick: "City Run",
         details: ["Open World", "Street Feel", "High Contrast"]
       },
       {
         id: "dreamscape-core",
         name: "Dreamscape Core",
         tag: "Abstract / Atmospheric",
-        desc: "A surreal world of floating platforms, soft fog, and calm monochrome shapes for ambient exploration.",
+        desc: "A surreal destination with floating forms and calm cinematic motion for immersive viewing.",
         previewModel: "alien_planet_lv-426.glb",
         worldModel: "alien_planet_lv-426.glb",
         sky: "#151515",
         accent: "Ambient Space",
+        stage: "Stage 04",
+        meta: "Atmosphere Mode",
+        quick: "Dream Core",
         details: ["Abstract", "Floating Forms", "Atmospheric"]
       }
     ];
@@ -1183,6 +1505,11 @@
     const modelViewer = document.getElementById('modelViewer');
     const modelFileLabel = document.getElementById('modelFileLabel');
     const vrWorldName = document.getElementById('vrWorldName');
+    const worldAccent = document.getElementById('worldAccent');
+    const worldMissionLabel = document.getElementById('worldMissionLabel');
+    const worldMetaLabel = document.getElementById('worldMetaLabel');
+    const viewerWorldTag = document.getElementById('viewerWorldTag');
+    const worldStrip = document.getElementById('worldStrip');
 
     const helpModal = document.getElementById('helpModal');
     const worldsSheet = document.getElementById('worldsSheet');
@@ -1210,21 +1537,26 @@
       worldList.innerHTML = worlds.map((world, index) => `
         <button class="world-option ${index === selectedWorldIndex ? 'active' : ''}" data-world-index="${index}" type="button">
           <div class="world-option-top">
-            <h3>${world.name}</h3>
+            <h3>${world.stage} · ${world.name}</h3>
             <span class="world-tag">${world.tag}</span>
           </div>
           <p>${world.desc}</p>
           <div class="world-meta">
+            <span class="meta-pill">${world.accent}</span>
             ${world.details.map(detail => `<span class="meta-pill">${detail}</span>`).join('')}
           </div>
         </button>
       `).join('');
 
-      worldList.querySelectorAll('[data-world-index]').forEach(btn => {
+      worldStrip.innerHTML = worlds.map((world, index) => `
+        <button class="world-pill ${index === selectedWorldIndex ? 'active' : ''}" data-world-index="${index}" type="button">${world.stage} · ${world.quick}</button>
+      `).join('');
+
+      document.querySelectorAll('[data-world-index]').forEach(btn => {
         btn.addEventListener('click', () => {
           const index = Number(btn.dataset.worldIndex);
           setWorld(index);
-          closeWorlds();
+          if (btn.closest('#worldList')) closeWorlds();
         });
       });
     }
@@ -1235,8 +1567,12 @@
 
       worldTitle.textContent = world.name;
       worldStyleTag.textContent = world.tag;
+      worldAccent.textContent = world.accent;
       worldDescription.textContent = world.desc;
-      modelFileLabel.textContent = world.previewModel.split('/').pop();
+      worldMissionLabel.textContent = world.stage;
+      worldMetaLabel.textContent = world.meta;
+      modelFileLabel.textContent = world.quick;
+      viewerWorldTag.textContent = `${world.stage} · ${world.quick}`;
       vrWorldName.textContent = world.name;
 
       modelViewer.src = world.previewModel;
